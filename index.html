@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>NudeSender™ (Fictício)</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: #0f1220;
+      color: #eaeaf0;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .app {
+      background: #171a2e;
+      border-radius: 14px;
+      padding: 24px;
+      width: 320px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    }
+    h1 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+    p {
+      font-size: .9rem;
+      opacity: .85;
+    }
+    .preview {
+      margin: 16px 0;
+      height: 140px;
+      border-radius: 10px;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          #2a2e55,
+          #2a2e55 10px,
+          #23264a 10px,
+          #23264a 20px
+        );
+      display: grid;
+      place-items: center;
+      font-size: .85rem;
+      color: #b8bbff;
+    }
+    label {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: .85rem;
+      margin: 12px 0;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #5b6cff;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #3a3d6e;
+      cursor: not-allowed;
+    }
+    .log {
+      margin-top: 12px;
+      font-size: .85rem;
+      min-height: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>NudeSender™</h1>
+    <p>Simulador fictício de envio. Nenhuma imagem real é usada.</p>
+
+    <div class="preview">
+      [ imagem fictícia genérica ]
+    </div>
+
+    <label>
+      <input type="checkbox" id="consentimento" />
+      Tenho conforto e consentimento (fictício)
+    </label>
+
+    <button id="enviar" disabled>Enviar Nude (fake)</button>
+<div class="log" id="log"></div>
+<div class="stats" id="stats" style="display:none; font-size:.85rem; margin-top:8px;"></div>
+
+  </div>
+
+<script>
+  const checkbox = document.getElementById("consentimento");
+  const botao = document.getElementById("enviar");
+  const log = document.getElementById("log");
+  const stats = document.getElementById("stats");
+
+  let views = 0;
+  let shares = 0;
+  let samePeopleReplays = 0;
+  let timer = null;
+
+  checkbox.addEventListener("change", () => {
+    botao.disabled = !checkbox.checked;
+  });
+
+  botao.addEventListener("click", () => {
+    log.textContent = "📤 Envio fictício iniciado...";
+    stats.style.display = "block";
+    views = 0; shares = 0; samePeopleReplays = 0;
+
+    if (timer) clearInterval(timer);
+
+    timer = setInterval(simularAlcance, 900);
+  });
+
+  function simularAlcance() {
+    // crescimento pseudo-realista
+    views += Math.floor(Math.random() * 40) + 10;
+    shares += Math.random() > 0.6 ? Math.floor(Math.random() * 5) + 1 : 0;
+
+    // marcos narrativos
+    let mensagem = "";
+    if (views > 200 && views < 400) {
+      mensagem = "👀 Muitas pessoas estão vendo seu nude fictício...";
+    } else if (views >= 400 && views < 900) {
+      mensagem = `🔁 +${shares} usuários compartilharam seu nude fictício...`;
+    } else if (views >= 900 && views < 1500) {
+      mensagem = "🌍 Seu nude fictício já atingiu boa parte dos países.";
+    } else if (views >= 1500) {
+      // entra em modo re-visualização
+      samePeopleReplays += Math.floor(Math.random() * 25) + 5;
+      mensagem = `♻️ Seu nude fictício foi visualizado ${samePeopleReplays} vezes pelas mesmas pessoas.`;
+      // desacelera crescimento global
+      views += Math.floor(Math.random() * 10);
+    }
+
+    stats.innerHTML = `
+      <strong>Estatísticas (simuladas)</strong><br>
+      Visualizações: ${views}<br>
+      Compartilhamentos: ${shares}<br>
+      ${mensagem}
+    `;
+
+    // parada opcional para não crescer infinitamente
+    if (views > 2200) {
+      clearInterval(timer);
+      log.textContent = "🧠 Simulação encerrada: impacto máximo atingido.";
+    }
+  }
+</script>
+
+</body>
+</html>
